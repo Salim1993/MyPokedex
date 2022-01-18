@@ -57,6 +57,12 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-moshi:2.6.1"
     implementation 'com.serjltt.moshi:moshi-lazy-adapters:2.2'
 
+    //room
+    def room_version = "2.4.0"
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:2.4.0"
+    kapt "androidx.room:room-compiler:$room_version"
+
     //hilt
     implementation "com.google.dagger:hilt-android:2.38.1"
     kapt "com.google.dagger:hilt-compiler:2.38.1"

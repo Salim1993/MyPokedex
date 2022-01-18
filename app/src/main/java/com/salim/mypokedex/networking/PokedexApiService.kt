@@ -9,7 +9,7 @@ interface PokedexApiService {
 
     @GET("pokemon?limit={number}&offset={offset}")
     @Wrapped(path = ["results"])
-    fun getListOfPokemon(number: Int, offset: Int): PokemonListItemSchema
+    fun getListOfPokemon(number: Int, offset: Int): List<PokemonListItemSchema>
 
     @GET("pokemon/{name}")
     fun getPokemonDetails(name: String): PokemonDetailSchema

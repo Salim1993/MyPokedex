@@ -1,11 +1,13 @@
 package com.salim.mypokedex.pokemon
+import androidx.room.Entity
 import com.squareup.moshi.JsonClass
 
 import com.squareup.moshi.Json
 
 
 @JsonClass(generateAdapter = true)
-data class PokemonDetailSchema(
+@Entity(tableName = "Pokemon")
+data class Pokemon(
     @Json(name = "abilities")
     val abilities: List<Ability>,
     @Json(name = "base_experience")
