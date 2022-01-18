@@ -10,6 +10,7 @@ import com.salim.mypokedex.pokemon.PokemonDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ActivityScoped
@@ -20,9 +21,11 @@ import javax.inject.Singleton
 @Module
 object PreferencesModule {
 
-    @ActivityScoped
+    private const val POKEMON_PREF = "POKEMON_PREF"
+
+    @Singleton
     @Provides
-    fun providePreferences(@ActivityContext activity: Activity): SharedPreferences {
-        return activity.getPreferences(Context.MODE_PRIVATE)
+    fun providePreferences(@ApplicationContext appContext: Context): SharedPreferences {
+        return appContext.getSharedPreferences(POKEMON_PREF, Context.MODE_PRIVATE)
     }
 }

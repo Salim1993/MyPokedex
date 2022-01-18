@@ -2,10 +2,11 @@ package com.salim.mypokedex
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.salim.mypokedex.ui.main.MainFragment
+import com.salim.mypokedex.pokemonList.PokemonListFragment
+import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
 
-@HiltAndroidApp
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_activity)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
+                .replace(R.id.container, PokemonListFragment.newInstance())
                 .commitNow()
         }
     }

@@ -9,7 +9,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
+import timber.log.Timber
 import java.lang.Exception
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 class GetPokemonListUseCase @Inject constructor(
@@ -26,7 +28,9 @@ class GetPokemonListUseCase @Inject constructor(
         try {
             withContext(Dispatchers.IO) {
                 val list = service.getListOfPokemon(151, 0).map { it.name }
+                Timber.d("Pokemon got from api: ${list[0]}")
 
+                _pokemonListFlow.emit(list)
                 with(preferences.edit()) {
                     putString(POKEMON_LIST_PREF, convertListToString(list))
                     apply()
@@ -34,7 +38,8 @@ class GetPokemonListUseCase @Inject constructor(
             }
         } catch (e: HttpException) {
             e.printStackTrace()
-        } catch (e: Exception) {
+        } catch (e: UnknownHostException) {
+            //cant connect to host
             e.printStackTrace()
         }
     }
