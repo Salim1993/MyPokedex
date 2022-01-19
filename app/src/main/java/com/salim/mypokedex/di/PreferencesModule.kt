@@ -7,6 +7,7 @@ import androidx.room.Room
 import com.salim.mypokedex.database.AppDatabase
 import com.salim.mypokedex.database.AppDatabase.Companion.DATABASE_NAME
 import com.salim.mypokedex.pokemon.PokemonDao
+import com.salim.mypokedex.utilities.SharedPreferencesWrapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,7 +26,8 @@ object PreferencesModule {
 
     @Singleton
     @Provides
-    fun providePreferences(@ApplicationContext appContext: Context): SharedPreferences {
-        return appContext.getSharedPreferences(POKEMON_PREF, Context.MODE_PRIVATE)
+    fun providePreferences(@ApplicationContext appContext: Context): SharedPreferencesWrapper {
+        val prefs = appContext.getSharedPreferences(POKEMON_PREF, Context.MODE_PRIVATE)
+        return SharedPreferencesWrapper(prefs)
     }
 }

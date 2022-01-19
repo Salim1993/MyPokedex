@@ -3,6 +3,7 @@ package com.salim.mypokedex.pokemonList
 import android.content.SharedPreferences
 import com.salim.mypokedex.networking.PokedexApiService
 import com.salim.mypokedex.pokemon.PokemonDao
+import com.salim.mypokedex.utilities.SharedPreferencesWrapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,12 +16,12 @@ import java.net.UnknownHostException
 import javax.inject.Inject
 
 class GetPokemonListUseCase @Inject constructor(
-    val service: PokedexApiService,
-    val preferences: SharedPreferences
+    private val service: PokedexApiService,
+    private val preferences: SharedPreferencesWrapper
 ) {
 
     private val _pokemonListFlow = MutableStateFlow(
-        convertStringToList(preferences.getString(POKEMON_LIST_PREF, "") ?: "")
+        convertStringToList(preferences.getString(POKEMON_LIST_PREF))
     )
     val pokemonListFlow = _pokemonListFlow.asStateFlow()
 
@@ -31,20 +32,19 @@ class GetPokemonListUseCase @Inject constructor(
                 Timber.d("Pokemon got from api: ${list[0]}")
 
                 _pokemonListFlow.emit(list)
-                with(preferences.edit()) {
-                    putString(POKEMON_LIST_PREF, convertListToString(list))
-                    apply()
-                }
+                preferences.saveString(POKEMON_LIST_PREF, convertListToString(list))
             }
         } catch (e: HttpException) {
             e.printStackTrace()
         } catch (e: UnknownHostException) {
             //cant connect to host
-            e.printStackTrace()
+            Timber.e("Got UnknownHostException. Could not connect to host.")
         }
     }
 
     private fun convertStringToList(string: String): List<String> {
+        if(string.isEmpty())
+            return emptyList()
         return string.split(", ")
     }
 
