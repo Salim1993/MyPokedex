@@ -39,8 +39,7 @@ class PokemonListFragment : Fragment(R.layout.pokemon_list_fragment) {
 
     private fun setupObservables() {
         viewModel.pokemonList.asLiveData().observe(viewLifecycleOwner) {
-            pokemonListAdapter.pokemonList = it
-            pokemonListAdapter.notifyDataSetChanged()
+            pokemonListAdapter.submitNewList(it)
         }
     }
 
