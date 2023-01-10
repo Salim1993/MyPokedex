@@ -34,6 +34,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    namespace 'com.salim.mypokedex'
 }
 
 dependencies {
@@ -46,6 +47,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
     implementation 'androidx.fragment:fragment-ktx:1.4.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     //testing stuff
     testImplementation 'junit:junit:4.+'
