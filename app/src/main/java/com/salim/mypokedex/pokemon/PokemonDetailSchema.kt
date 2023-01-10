@@ -41,4 +41,19 @@ data class PokemonDetailSchema(
     val types: List<TypeXX>,
     @Json(name = "weight")
     val weight: Int
-)
+) {
+    companion object {
+        fun createPokemon(detail: PokemonDetailSchema): Pokemon {
+            return Pokemon(
+                baseExperience = detail.baseExperience,
+                height = detail.height,
+                id = detail.id,
+                isDefault = detail.isDefault,
+                locationAreaEncounters = detail.locationAreaEncounters,
+                name = detail.name,
+                order = detail.order,
+                weight = detail.weight
+            )
+        }
+    }
+}

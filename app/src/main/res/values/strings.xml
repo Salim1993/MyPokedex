@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">My Pokedex</string>
+
+    <!-- Pokemon Details-->
+
+    <string name="name">Name: %s</string>
+    <string name="base_experience">Base Experience: %s</string>
+    <string name="height">Height: %s</string>
+    <string name="id">ID: %s</string>
+    <string name="is_default">Is Default: %s</string>
+    <string name="location_area_encounters">Location Area Encounters: %s</string>
+    <string name="order">Order: %s</string>
+    <string name="weight">Weight: %s</string>
 </resources>
