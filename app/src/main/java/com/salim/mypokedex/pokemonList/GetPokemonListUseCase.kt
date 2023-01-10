@@ -1,17 +1,13 @@
 package com.salim.mypokedex.pokemonList
 
-import android.content.SharedPreferences
 import com.salim.mypokedex.networking.PokedexApiService
-import com.salim.mypokedex.pokemon.PokemonDao
 import com.salim.mypokedex.utilities.SharedPreferencesWrapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import timber.log.Timber
-import java.lang.Exception
 import java.net.UnknownHostException
 import javax.inject.Inject
 

@@ -1,6 +1,8 @@
 package com.salim.mypokedex.di
 
 import com.salim.mypokedex.networking.PokedexApiService
+import com.salim.mypokedex.pokemon.PokemonDao
+import com.salim.mypokedex.pokemonDetails.GetPokemonDetailsUseCase
 import com.serjltt.moshi.adapters.Wrapped
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

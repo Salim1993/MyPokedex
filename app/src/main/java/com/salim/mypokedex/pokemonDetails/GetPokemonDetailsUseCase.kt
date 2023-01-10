@@ -3,6 +3,8 @@ package com.salim.mypokedex.pokemonDetails
 import com.salim.mypokedex.networking.PokedexApiService
 import com.salim.mypokedex.pokemon.PokemonDao
 import com.salim.mypokedex.pokemon.PokemonDetailSchema
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
@@ -10,10 +12,10 @@ import timber.log.Timber
 import java.net.UnknownHostException
 import javax.inject.Inject
 
-class GetPokemonDetailsUseCase @Inject constructor(
+class GetPokemonDetailsUseCase @AssistedInject constructor(
     private val service: PokedexApiService,
     private val dao: PokemonDao,
-    private val pokemonName: String
+    @Assisted private val pokemonName: String
 ) {
 
     private val pokemonListFlow = dao.getSpecificPokemon(pokemonName)

@@ -6,25 +6,26 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import com.salim.mypokedex.R
 import com.salim.mypokedex.databinding.FragmentPokemonDetailsBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class PokemonDetailsFragment : Fragment(R.layout.fragment_pokemon_details) {
 
-    companion object {
-        fun newInstance() = PokemonDetailsFragment()
-    }
+    @Inject lateinit var getPokemonDetailsUseCaseFactory: GetPokemonDetailsUseCaseFactory
 
-    private lateinit var viewModel: PokemonDetailsViewModel
+    private val viewModel: PokemonDetailsViewModel by viewModels {
+        PokemonDetailViewModelFactory("", getPokemonDetailsUseCaseFactory)
+    }
     private lateinit var binding: FragmentPokemonDetailsBinding
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val factory = PokemonDetailViewModelFactory("")
-        viewModel = ViewModelProvider(this, factory)[PokemonDetailsViewModel::class.java]
 
         binding = FragmentPokemonDetailsBinding.bind(view)
 
