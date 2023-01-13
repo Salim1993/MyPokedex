@@ -27,17 +27,21 @@ class PokemonDetailsFragment : Fragment(R.layout.fragment_pokemon_details) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        activity?.actionBar?.setDisplayHomeAsUpEnabled(true)
+
         binding = FragmentPokemonDetailsBinding.bind(view)
 
-        viewModel.pokemonDetailsFlow.asLiveData().observe(viewLifecycleOwner) { pokemon ->
-            binding.textName.text = getString(R.string.name, pokemon.name)
-            binding.textBaseExperience.text = getString(R.string.base_experience, pokemon.baseExperience)
-            binding.textHeight.text = getString(R.string.height, pokemon.height)
-            binding.textId.text = getString(R.string.id, pokemon.id)
-            binding.textIsDefault.text = getString(R.string.is_default, pokemon.isDefault)
-            binding.textLocationAreaEncounters.text = getString(R.string.location_area_encounters, pokemon.locationAreaEncounters)
-            binding.textOrder.text = getString(R.string.order, pokemon.order)
-            binding.textWeight.text = getString(R.string.weight, pokemon.weight)
+        viewModel.pokemonDetailsFlow.asLiveData().observe(viewLifecycleOwner) {
+            it?.let { pokemon ->
+                binding.textName.text = getString(R.string.name, pokemon.name)
+                binding.textBaseExperience.text = getString(R.string.base_experience, pokemon.baseExperience)
+                binding.textHeight.text = getString(R.string.height, pokemon.height)
+                binding.textId.text = getString(R.string.id, pokemon.id)
+                binding.textIsDefault.text = getString(R.string.is_default, pokemon.isDefault)
+                binding.textLocationAreaEncounters.text = getString(R.string.location_area_encounters, pokemon.locationAreaEncounters)
+                binding.textOrder.text = getString(R.string.order, pokemon.order)
+                binding.textWeight.text = getString(R.string.weight, pokemon.weight)
+            }
         }
     }
 }

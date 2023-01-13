@@ -11,4 +11,5 @@
     <string name="location_area_encounters">Location Area Encounters: %s</string>
     <string name="order">Order: %s</string>
     <string name="weight">Weight: %s</string>
+    <string name="pokemon_details">Pokemon Details</string>
 </resources>

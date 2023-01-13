@@ -16,7 +16,7 @@ interface PokemonDao {
     suspend fun insertPokemonList(list: List<Pokemon>)
 
     @Query("SELECT * FROM pokemon WHERE name = :pokemonName")
-    fun getSpecificPokemon(pokemonName: String): Flow<Pokemon>
+    fun getSpecificPokemon(pokemonName: String): Flow<Pokemon?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updatePokemonDetail(pokemon: Pokemon)
