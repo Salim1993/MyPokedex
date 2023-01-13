@@ -1,11 +1,11 @@
 package com.salim.mypokedex.pokemonList
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.salim.mypokedex.R
@@ -28,7 +28,10 @@ class PokemonListFragment : Fragment(R.layout.pokemon_list_fragment) {
     }
 
     private fun setupViews() {
-        pokemonListAdapter = PokemonListAdapter(viewModel.pokemonList.value)
+        pokemonListAdapter = PokemonListAdapter(
+            viewModel.pokemonList.value,
+            this::clickedPokemon
+        )
 
         with(binding.pokemonList) {
             adapter = pokemonListAdapter
@@ -43,7 +46,8 @@ class PokemonListFragment : Fragment(R.layout.pokemon_list_fragment) {
         }
     }
 
-    companion object {
-        fun newInstance() = PokemonListFragment()
+    fun clickedPokemon(pokemonName: String) {
+        val action = PokemonListFragmentDirections.actionPokemonListFragmentToPokemonDetailsFragment(pokemonName)
+        findNavController().navigate(action)
     }
 }

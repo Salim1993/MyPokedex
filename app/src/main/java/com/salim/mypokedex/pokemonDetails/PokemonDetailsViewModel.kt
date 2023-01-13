@@ -14,8 +14,7 @@ class PokemonDetailsViewModel(
         private val pokemonDetailsUseCase: GetPokemonDetailsUseCase
     ): ViewModel() {
 
-    private val _pokemonDetailsFlow = MutableSharedFlow<Pokemon>()
-    val pokemonDetailsFlow = _pokemonDetailsFlow.asSharedFlow()
+    val pokemonDetailsFlow = pokemonDetailsUseCase.pokemonListFlow
 
     init {
         getPokemonDetail()

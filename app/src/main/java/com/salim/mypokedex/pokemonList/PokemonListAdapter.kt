@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.salim.mypokedex.databinding.PokemonListItemBinding
 
-class PokemonListAdapter(private var pokemonList: List<String>)
+class PokemonListAdapter(private var pokemonList: List<String>, private val onClick: (String) -> Unit)
     : RecyclerView.Adapter<PokemonListAdapter.PokemonItemViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonItemViewHolder {
@@ -21,6 +21,8 @@ class PokemonListAdapter(private var pokemonList: List<String>)
             pokemonNumberText.text = "#${position + 1}"
 
             pokemonNameText.text = pokemonName
+
+            root.setOnClickListener { onClick(pokemonName) }
         }
     }
 

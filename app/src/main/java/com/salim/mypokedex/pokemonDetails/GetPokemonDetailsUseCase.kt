@@ -18,7 +18,7 @@ class GetPokemonDetailsUseCase @AssistedInject constructor(
     @Assisted private val pokemonName: String
 ) {
 
-    private val pokemonListFlow = dao.getSpecificPokemon(pokemonName)
+    val pokemonListFlow = dao.getSpecificPokemon(pokemonName)
 
     suspend fun getPokemonDetails() {
         try {

@@ -1,13 +1,11 @@
 package com.salim.mypokedex.pokemonDetails
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
+import androidx.navigation.fragment.navArgs
 import com.salim.mypokedex.R
 import com.salim.mypokedex.databinding.FragmentPokemonDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,8 +16,10 @@ class PokemonDetailsFragment : Fragment(R.layout.fragment_pokemon_details) {
 
     @Inject lateinit var getPokemonDetailsUseCaseFactory: GetPokemonDetailsUseCaseFactory
 
+    private val args: PokemonDetailsFragmentArgs by navArgs()
+
     private val viewModel: PokemonDetailsViewModel by viewModels {
-        PokemonDetailViewModelFactory("", getPokemonDetailsUseCaseFactory)
+        PokemonDetailsViewModelFactory(args.pokemonName, getPokemonDetailsUseCaseFactory)
     }
     private lateinit var binding: FragmentPokemonDetailsBinding
 
