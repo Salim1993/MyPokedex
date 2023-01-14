@@ -7,21 +7,26 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
 import io.mockk.verify
-import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 
 import org.junit.Assert.*
+import retrofit2.HttpException
 import java.net.UnknownHostException
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class GetPokemonListUseCaseTest {
 
-    @MockK lateinit var pokedexApiService: PokedexApiService
+    @MockK
+    lateinit var pokedexApiService: PokedexApiService
     //Relaxing function that return unit cause i don't care about there results, only that they are called
-    @MockK(relaxUnitFun = true) lateinit var sharedPreferencesWrapper: SharedPreferencesWrapper
+    @MockK(relaxUnitFun = true)
+    lateinit var sharedPreferencesWrapper: SharedPreferencesWrapper
 
     @Before
     fun setup() {
@@ -29,7 +34,7 @@ class GetPokemonListUseCaseTest {
     }
 
     @Test
-    fun getOriginal151List_Success_ReturnBulbasaur() {
+    fun `getOriginal151List is success and return list of bulbasaur`() = runTest {
         //arrange
         val bulbasaurList = listOf(PokemonListItemSchema("bulbasaur", "NA"))
         coEvery { pokedexApiService.getListOfPokemon(any(), any()) } returns bulbasaurList
@@ -38,21 +43,47 @@ class GetPokemonListUseCaseTest {
         val testSubject =  GetPokemonListUseCase(pokedexApiService, sharedPreferencesWrapper)
 
         //act
-        runBlocking {
-            testSubject.getOriginal151List()
-        }
+        testSubject.getOriginal151List()
 
         //assert
-        runBlocking {
-            val result = testSubject.pokemonListFlow.first()
+        val result = testSubject.pokemonListFlow.first()
 
-            assertEquals(listOf("bulbasaur"), result)
-        }
+        assertEquals(listOf("bulbasaur"), result)
         verify { sharedPreferencesWrapper.saveString(any(), any()) }
     }
 
     @Test
-    fun getOriginal151List_Failure_ReturnBulbasaur() {
+    fun `getOriginal151List receives HttpException and return empty list of pokemon`() = runTest {
+        val mockedHttpException = mockk<HttpException>(relaxed = true)
+        coEvery { pokedexApiService.getListOfPokemon(any(), any()) } throws mockedHttpException
+        every { sharedPreferencesWrapper.getString(any()) } returns ""
+
+        val testSubject =  GetPokemonListUseCase(pokedexApiService, sharedPreferencesWrapper)
+
+        testSubject.getOriginal151List()
+
+        assertTrue(testSubject.pokemonListFlow.value.isEmpty())
+    }
+
+    @Test
+    fun `getOriginal151List receives HttpException and return bulbasaur in cache`() = runTest {
+        val mockedHttpException = mockk<HttpException>(relaxed = true)
+        coEvery { pokedexApiService.getListOfPokemon(any(), any()) } throws mockedHttpException
+        every { sharedPreferencesWrapper.getString(any()) } returns "bulbasaur"
+
+        val testSubject =  GetPokemonListUseCase(pokedexApiService, sharedPreferencesWrapper)
+
+        testSubject.getOriginal151List()
+
+        //assert
+        val result = testSubject.pokemonListFlow.first()
+
+        assertEquals(listOf("bulbasaur"), result)
+        verify(exactly = 0) { sharedPreferencesWrapper.saveString(any(), any()) }
+    }
+
+    @Test
+    fun `getOriginal151List receives UnknownHostException and return empty list of pokemon`() = runTest {
         //arrange
         coEvery { pokedexApiService.getListOfPokemon(any(), any()) } throws UnknownHostException()
         every { sharedPreferencesWrapper.getString(any()) } returns "bulbasaur"
@@ -60,21 +91,17 @@ class GetPokemonListUseCaseTest {
         val testSubject =  GetPokemonListUseCase(pokedexApiService, sharedPreferencesWrapper)
 
         //act
-        runBlocking {
-            testSubject.getOriginal151List()
-        }
+        testSubject.getOriginal151List()
 
         //assert
-        runBlocking {
-            val result = testSubject.pokemonListFlow.first()
+        val result = testSubject.pokemonListFlow.first()
 
-            assertEquals(listOf("bulbasaur"), result)
-        }
+        assertEquals(listOf("bulbasaur"), result)
         verify(exactly = 0) { sharedPreferencesWrapper.saveString(any(), any()) }
     }
 
     @Test
-    fun getOriginal151List_Failure_ReturnEmpty() {
+    fun `getOriginal151List receives UnknownHostException and return bulbasaur in cache`() = runTest {
         //arrange
         coEvery { pokedexApiService.getListOfPokemon(any(), any()) } throws UnknownHostException()
         every { sharedPreferencesWrapper.getString(any()) } returns ""
@@ -82,16 +109,12 @@ class GetPokemonListUseCaseTest {
         val testSubject =  GetPokemonListUseCase(pokedexApiService, sharedPreferencesWrapper)
 
         //act
-        runBlocking {
-            testSubject.getOriginal151List()
-        }
+        testSubject.getOriginal151List()
 
         //assert
-        runBlocking {
-            val result = testSubject.pokemonListFlow.first()
+        val result = testSubject.pokemonListFlow.first()
 
-            assertTrue(result.isEmpty())
-        }
+        assertTrue(result.isEmpty())
         verify(exactly = 0) { sharedPreferencesWrapper.saveString(any(), any()) }
     }
 }
