@@ -22,9 +22,11 @@ import java.net.UnknownHostException
 @OptIn(ExperimentalCoroutinesApi::class)
 class GetPokemonListUseCaseTest {
 
-    @MockK lateinit var pokedexApiService: PokedexApiService
+    @MockK
+    lateinit var pokedexApiService: PokedexApiService
     //Relaxing function that return unit cause i don't care about there results, only that they are called
-    @MockK(relaxUnitFun = true) lateinit var sharedPreferencesWrapper: SharedPreferencesWrapper
+    @MockK(relaxUnitFun = true)
+    lateinit var sharedPreferencesWrapper: SharedPreferencesWrapper
 
     @Before
     fun setup() {
