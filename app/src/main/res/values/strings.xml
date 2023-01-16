@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">My Pokedex</string>
 
-    <!-- Pokemon Details-->
+    <!-- Pokemon Details -->
 
     <string name="name">Name: %s</string>
     <string name="base_experience">Base Experience: %s</string>
@@ -12,4 +12,7 @@
     <string name="order">Order: %s</string>
     <string name="weight">Weight: %s</string>
     <string name="pokemon_details">Pokemon Details</string>
+
+    <!-- Pokemon List Menu -->
+    <string name="action_search">search</string>
 </resources>

@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.salim.mypokedex.databinding.PokemonListItemBinding
+import java.util.ArrayList
 
 class PokemonListAdapter(private var pokemonList: List<String>, private val onClick: (String) -> Unit)
     : RecyclerView.Adapter<PokemonListAdapter.PokemonItemViewHolder>(){
@@ -33,6 +34,9 @@ class PokemonListAdapter(private var pokemonList: List<String>, private val onCl
 
         pokemonList = newList
         diff.dispatchUpdatesTo(this)
+    }
+
+    fun setUpdatedData(arrayList: ArrayList<String>) {
     }
 
     inner class PokemonItemViewHolder(val binding: PokemonListItemBinding)
