@@ -1,4 +1,4 @@
-package com.salim.mypokedex
+package com.salim.mypokedex.testHelpers
 
 import com.salim.mypokedex.pokemon.*
 
