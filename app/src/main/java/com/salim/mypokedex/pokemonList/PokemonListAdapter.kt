@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.salim.mypokedex.databinding.PokemonListItemBinding
+import com.salim.mypokedex.pokemon.PokemonNameAndId
 import java.util.ArrayList
 
-class PokemonListAdapter(private var pokemonList: List<String>, private val onClick: (String) -> Unit)
+class PokemonListAdapter(private var pokemonList: List<PokemonNameAndId>, private val onClick: (String) -> Unit)
     : RecyclerView.Adapter<PokemonListAdapter.PokemonItemViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonItemViewHolder {
@@ -17,32 +18,29 @@ class PokemonListAdapter(private var pokemonList: List<String>, private val onCl
 
 
     override fun onBindViewHolder(holder: PokemonItemViewHolder, position: Int) {
-        val pokemonName = pokemonList[position]
+        val pokemonNameAndId = pokemonList[position]
         with(holder.binding) {
-            pokemonNumberText.text = "#${position + 1}"
+            pokemonNumberText.text = "#${pokemonNameAndId.id}"
 
-            pokemonNameText.text = pokemonName
+            pokemonNameText.text = pokemonNameAndId.name
 
-            root.setOnClickListener { onClick(pokemonName) }
+            root.setOnClickListener { onClick(pokemonNameAndId.name) }
         }
     }
 
     override fun getItemCount(): Int = pokemonList.size
 
-    fun submitNewList(newList: List<String>) {
+    fun submitNewList(newList: List<PokemonNameAndId>) {
         val diff = DiffUtil.calculateDiff(PokemonListDiffUtilCallback(pokemonList, newList))
 
         pokemonList = newList
         diff.dispatchUpdatesTo(this)
     }
 
-    fun setUpdatedData(arrayList: ArrayList<String>) {
-    }
-
     inner class PokemonItemViewHolder(val binding: PokemonListItemBinding)
         :RecyclerView.ViewHolder(binding.root)
 
-    class PokemonListDiffUtilCallback(private val oldList: List<String>, private val newList: List<String>): DiffUtil.Callback() {
+    class PokemonListDiffUtilCallback(private val oldList: List<PokemonNameAndId>, private val newList: List<PokemonNameAndId>): DiffUtil.Callback() {
 
         override fun getOldListSize(): Int = oldList.size
         override fun getNewListSize(): Int = newList.size

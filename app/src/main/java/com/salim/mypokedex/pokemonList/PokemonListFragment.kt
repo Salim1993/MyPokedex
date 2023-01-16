@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.salim.mypokedex.R
 import com.salim.mypokedex.databinding.PokemonListFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
 
 
 @AndroidEntryPoint
@@ -87,7 +88,7 @@ class PokemonListFragment : Fragment(R.layout.pokemon_list_fragment) {
                             pokemonListAdapter.submitNewList(ArrayList(viewModel.pokemonList.value))
                         }
                         else {
-                            val filteredList = viewModel.pokemonList.value.filter { it.startsWith(query) }
+                            val filteredList = viewModel.pokemonList.value.filter { it.name.startsWith(query) }
                             pokemonListAdapter.submitNewList(ArrayList(filteredList))
                         }
                         return true
