@@ -38,14 +38,12 @@ class GetPokemonListUseCase @Inject constructor(
         }
     }
 
-    // TODO: need unit test to make sure that converting to list actually works
     private fun convertStringToList(string: String): List<String> {
         if(string.isEmpty())
             return emptyList()
         return string.split(", ")
     }
 
-    // TODO: need unit test to make sure that converting to string for cache actually works
     private fun convertListToString(list: List<String>): String {
         return list.joinToString()
     }

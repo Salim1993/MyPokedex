@@ -1,6 +1,7 @@
 package com.salim.mypokedex.pokemonList
 
 import com.salim.mypokedex.MainDispatcherRule
+import com.salim.mypokedex.pokemon.PokemonNameAndId
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
@@ -31,13 +32,16 @@ internal class PokemonListViewModelTest {
     @Test
     fun `getPokemonList should retrieve the correct list of Pokemon`() = runTest {
         // arrange
-        val expectedList = listOf("Bulbasaur", "Ivysaur", "Venusaur")
-        every { getPokemonListUseCase.pokemonListFlow } returns MutableStateFlow(expectedList)
+        val pokemonList = listOf("Bulbasaur", "Ivysaur", "Venusaur")
+        every { getPokemonListUseCase.pokemonListFlow } returns MutableStateFlow(pokemonList)
 
         //act
         val viewModel = PokemonListViewModel(getPokemonListUseCase)
 
         //assert
+        val expectedList = pokemonList.mapIndexed { index, name ->
+            PokemonNameAndId(index + 1, name)
+        }
         assertEquals(expectedList, viewModel.pokemonList.value)
     }
 

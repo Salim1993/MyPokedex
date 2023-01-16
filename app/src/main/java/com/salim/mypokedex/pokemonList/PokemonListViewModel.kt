@@ -13,7 +13,9 @@ class PokemonListViewModel @Inject constructor(
     private val pokemonListUseCase: GetPokemonListUseCase
 ) : ViewModel() {
 
-    private val _pokemonList = MutableStateFlow<List<PokemonNameAndId>>(emptyList())
+    private val _pokemonList = MutableStateFlow(
+        convertStringListToPokemonNameAndIdList(pokemonListUseCase.pokemonListFlow.value)
+    )
     val pokemonList = _pokemonList.asStateFlow()
 
     init {
@@ -23,10 +25,13 @@ class PokemonListViewModel @Inject constructor(
 
     private fun collectPokemonDataAndTransform() = viewModelScope.launch {
         pokemonListUseCase.pokemonListFlow.collect { list ->
-            val newList = list.mapIndexed { index, name ->
-                PokemonNameAndId(index + 1, name)
-            }
-            _pokemonList.emit(newList)
+            _pokemonList.emit(convertStringListToPokemonNameAndIdList(list))
+        }
+    }
+
+    private fun convertStringListToPokemonNameAndIdList(list: List<String>): List<PokemonNameAndId> {
+        return list.mapIndexed { index, name ->
+            PokemonNameAndId(index + 1, name)
         }
     }
 

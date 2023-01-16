@@ -117,4 +117,46 @@ class GetPokemonListUseCaseTest {
         assertTrue(result.isEmpty())
         verify(exactly = 0) { sharedPreferencesWrapper.saveString(any(), any()) }
     }
+
+    @Test
+    fun `getOriginal151List is success and saved into cache with correct format`() = runTest {
+        //arrange
+        val pokemonList = listOf(
+            PokemonListItemSchema("bulbasaur", "NA"),
+            PokemonListItemSchema("ivysaur", "NA"),
+            PokemonListItemSchema("venasaur", "NA"),
+        )
+        coEvery { pokedexApiService.getListOfPokemon(any(), any()) } returns pokemonList
+        every { sharedPreferencesWrapper.getString(any()) } returns ""
+
+        val testSubject =  GetPokemonListUseCase(pokedexApiService, sharedPreferencesWrapper)
+
+        //act
+        testSubject.getOriginal151List()
+
+        //assert
+        val result = testSubject.pokemonListFlow.first()
+
+        assertEquals(listOf("bulbasaur", "ivysaur", "venasaur"), result)
+        val expectedSavedString = "bulbasaur, ivysaur, venasaur"
+        verify { sharedPreferencesWrapper.saveString(any(), expectedSavedString) }
+    }
+
+    @Test
+    fun `getOriginal151List is failure and but loads info from cache correctly`() = runTest {
+        //arrange
+        coEvery { pokedexApiService.getListOfPokemon(any(), any()) } throws UnknownHostException()
+        every { sharedPreferencesWrapper.getString(any()) } returns "bulbasaur, ivysaur, venasaur"
+
+        val testSubject =  GetPokemonListUseCase(pokedexApiService, sharedPreferencesWrapper)
+
+        //act
+        testSubject.getOriginal151List()
+
+        //assert
+        val result = testSubject.pokemonListFlow.first()
+
+        assertEquals(listOf("bulbasaur", "ivysaur", "venasaur"), result)
+        verify(exactly = 0) { sharedPreferencesWrapper.saveString(any(), any()) }
+    }
 }
