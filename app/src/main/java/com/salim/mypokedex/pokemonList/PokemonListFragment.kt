@@ -39,6 +39,8 @@ class PokemonListFragment : Fragment(R.layout.pokemon_list_fragment) {
         setupViews()
         setupSearchMenu()
         setupObservables()
+
+        viewModel.getPokemonList()
     }
 
     private fun setupViews() {

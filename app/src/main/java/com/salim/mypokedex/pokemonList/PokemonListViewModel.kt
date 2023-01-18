@@ -33,7 +33,6 @@ class PokemonListViewModel @Inject constructor(
 
     init {
         collectPokemonDataAndTransform()
-        getPokemonList()
     }
 
     private fun collectPokemonDataAndTransform() = viewModelScope.launch {
@@ -48,7 +47,7 @@ class PokemonListViewModel @Inject constructor(
         }
     }
 
-    private fun getPokemonList() = viewModelScope.launch {
+    fun getPokemonList() = viewModelScope.launch {
         // offset needs to also include pokemon on boundary of lower limit, so minus one to include that one
         pokemonListUseCase.getPokemonList(calculateNumberOfPokemonInList(), lowerPokemonLimit - 1)
     }
@@ -80,8 +79,8 @@ class PokemonListViewModel @Inject constructor(
     }
 
     companion object {
-        private const val ABSOLUTE_LOWER_LIMIT = 1
-        private const val ABSOLUTE_UPPER_LIMIT = 1279
+        const val ABSOLUTE_LOWER_LIMIT = 1
+        const val ABSOLUTE_UPPER_LIMIT = 1279
         const val BELOW_RANGE = 0
         const val ABOVE_RANGE = 1280
     }

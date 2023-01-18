@@ -36,6 +36,7 @@ internal class PokemonListViewModelTest {
 
         //act
         val viewModel = PokemonListViewModel(getPokemonListUseCase)
+        viewModel.getPokemonList()
 
         //assert
         val expectedList = pokemonList.mapIndexed { index, name ->
@@ -52,6 +53,7 @@ internal class PokemonListViewModelTest {
 
         //act
         val viewModel = PokemonListViewModel(getPokemonListUseCase)
+        viewModel.getPokemonList()
 
         //assert
         assertEquals(expectedList, viewModel.pokemonList.value)
@@ -82,7 +84,7 @@ internal class PokemonListViewModelTest {
     }
 
     @Test
-    fun `setNewPokemonLimit, sets incorrect upper limits, make sure upper error events triggered and no new call to api`() = runTest {
+    fun `setNewPokemonLimit, sets incorrect upper limits, make sure upper limit error events triggered and no new call to api`() = runTest {
         // assert (Needed so object we testing don't crash)
         val expectedList = emptyList<String>()
         every { getPokemonListUseCase.getPokemonListFlow() } returns MutableStateFlow(expectedList)
@@ -90,7 +92,7 @@ internal class PokemonListViewModelTest {
         // act
         val fakeGetPokemonListUseCase = FakeGetPokemonListUseCase()
         val viewModel = PokemonListViewModel(fakeGetPokemonListUseCase)
-        val job = viewModel.setNewPokemonLimit(PokemonListViewModel.BELOW_RANGE, PokemonListViewModel.ABOVE_RANGE)
+        viewModel.setNewPokemonLimit(PokemonListViewModel.ABSOLUTE_LOWER_LIMIT, PokemonListViewModel.ABOVE_RANGE)
 
         // assert
         // make sure error events are fired
@@ -98,9 +100,29 @@ internal class PokemonListViewModelTest {
 
         assertTrue(upperLimitEventResult)
 
-        // make sure api is called with correct parameters
-        // TODO: Fix below, caused by fact that i call api when i init my viewmodel, need to take it out init and make setup function instead
-        //assertFalse(fakeGetPokemonListUseCase.isGetPokemonListCalled)
+        // make api is not called
+        assertFalse(fakeGetPokemonListUseCase.isGetPokemonListCalled)
+    }
+
+    @Test
+    fun `setNewPokemonLimit, sets incorrect lower limits, make sure lower limit error events triggered and no new call to api`() = runTest {
+        // assert (Needed so object we testing don't crash)
+        val expectedList = emptyList<String>()
+        every { getPokemonListUseCase.getPokemonListFlow() } returns MutableStateFlow(expectedList)
+
+        // act
+        val fakeGetPokemonListUseCase = FakeGetPokemonListUseCase()
+        val viewModel = PokemonListViewModel(fakeGetPokemonListUseCase)
+        viewModel.setNewPokemonLimit(PokemonListViewModel.BELOW_RANGE, PokemonListViewModel.ABSOLUTE_UPPER_LIMIT)
+
+        // assert
+        // make sure error events are fired
+        val lowerLimitEventResult = viewModel.isLowerLimitToLowFlow.first()
+
+        assertTrue(lowerLimitEventResult)
+
+        // make api is not called
+        assertFalse(fakeGetPokemonListUseCase.isGetPokemonListCalled)
     }
 
     @Test
