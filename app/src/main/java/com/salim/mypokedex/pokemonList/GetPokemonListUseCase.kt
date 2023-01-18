@@ -21,10 +21,10 @@ class GetPokemonListUseCase @Inject constructor(
     )
     val pokemonListFlow = _pokemonListFlow.asStateFlow()
 
-    suspend fun getOriginal151List() {
+    suspend fun getOriginal151List(number: Int, offset: Int) {
         try {
             withContext(Dispatchers.IO) {
-                val list = service.getListOfPokemon(151, 0).map { it.name }
+                val list = service.getListOfPokemon(number, offset).map { it.name }
                 Timber.d("Pokemon got from api: ${list[0]}")
 
                 _pokemonListFlow.emit(list)

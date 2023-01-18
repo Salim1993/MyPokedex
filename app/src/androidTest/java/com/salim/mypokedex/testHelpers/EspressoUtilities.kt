@@ -17,7 +17,7 @@ object EspressoUtilities {
     fun typeSearchViewText(text: String): ViewAction {
         return object : ViewAction {
             override fun getDescription(): String {
-                return "Change view text"
+                return "Change search view text"
             }
 
             override fun getConstraints(): Matcher<View> {

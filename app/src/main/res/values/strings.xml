@@ -15,4 +15,19 @@
 
     <!-- Pokemon List Menu -->
     <string name="action_search">search</string>
+    <string name="action_change_pokemon_range">Change Pokemon list Range</string>
+
+    <!-- Pokemon List Errors -->
+    <string name="incorrect_range">Incorrect Range</string>
+    <string name="pokemon_list_lower_limit_error">Incorrect lower range. Minimum on range is 1.</string>
+    <string name="pokemon_list_upper_limit_error">Incorrect upper range. Maximum on range is 1279.</string>
+
+    <!-- Pokemon Range Dialog -->
+    <string name="change_range_title">Change Pokemon Range</string>
+    <string name="to">to</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="range_description">Please change the range of pokemon you would like to see. Range is between 1 to 1279.</string>
+    <string name="lower_limit_content_description">Please enter number for lower limit of range for pokemon you would like to see.</string>
+    <string name="upper_limit_content_description">Please enter number for upper limit of range for pokemon you would like to see.</string>
 </resources>

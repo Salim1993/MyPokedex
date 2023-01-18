@@ -7,4 +7,8 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="always"/>
 
+    <item android:id="@+id/action_change_range"
+        android:title="@string/action_change_pokemon_range"
+        android:icon="@drawable/ic_baseline_height_24"/>
+
 </menu>

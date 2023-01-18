@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:padding="8dp"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/range_description_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:labelFor="@id/lower_limit_edit_text"
+        android:text="@string/range_description" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/lower_limit_edit_text"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:maxWidth="20dp"
+            android:ems="10"
+            android:inputType="number"
+            android:contentDescription="@string/lower_limit_content_description"
+            android:autofillHints="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/black"
+            android:layout_marginHorizontal="8dp"
+            android:text="@string/to" />
+
+        <EditText
+            android:id="@+id/upper_limit_edit_text"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:contentDescription="@string/upper_limit_content_description"
+            android:autofillHints="1279"/>
+    </LinearLayout>
+</LinearLayout>

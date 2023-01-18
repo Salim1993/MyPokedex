@@ -1,10 +1,14 @@
 package com.salim.mypokedex.pokemonList
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AlertDialogLayout
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -17,8 +21,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.salim.mypokedex.R
 import com.salim.mypokedex.databinding.PokemonListFragmentBinding
+import com.salim.mypokedex.databinding.RangePokemonDailogBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.first
 
 
 @AndroidEntryPoint
@@ -51,8 +55,75 @@ class PokemonListFragment : Fragment(R.layout.pokemon_list_fragment) {
     }
 
     private fun setupObservables() {
-        viewModel.pokemonList.asLiveData().observe(viewLifecycleOwner) {
-            pokemonListAdapter.submitNewList(it)
+        with(viewModel) {
+            pokemonList.asLiveData().observe(viewLifecycleOwner) {
+                pokemonListAdapter.submitNewList(it)
+            }
+
+            showChangePokemonRangeDialog.asLiveData().observe(viewLifecycleOwner) {
+                if(it)
+                    showChangePokemonRangeDialog()
+            }
+
+            isUpperLimitToHighFlow.asLiveData().observe(viewLifecycleOwner) {
+                if(it)
+                    showUpperLimitToHighDialog()
+            }
+
+            isLowerLimitToLowFlow.asLiveData().observe(viewLifecycleOwner) {
+                if(it)
+                    showLowerLimitToLowDialog()
+            }
+        }
+    }
+
+    private fun showChangePokemonRangeDialog() {
+        createRangeDialog()
+    }
+
+    private fun showUpperLimitToHighDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.incorrect_range)
+            .setMessage(R.string.pokemon_list_upper_limit_error)
+            .setPositiveButton(R.string.ok) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
+    }
+
+    private fun showLowerLimitToLowDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.incorrect_range)
+            .setMessage(R.string.pokemon_list_lower_limit_error)
+            .setPositiveButton(R.string.ok) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
+    }
+
+    private fun createRangeDialog() {
+        val view = layoutInflater.inflate(R.layout.range_pokemon_dailog, null)
+
+        val binding = RangePokemonDailogBinding.bind(view)
+
+        val builder = AlertDialog.Builder(requireContext())
+        with(builder) {
+            setTitle(R.string.change_range_title)
+            setView(view)
+            setPositiveButton(R.string.ok) { dialog, _ ->
+                val lowerLimit = binding.lowerLimitEditText.text.toString().toIntOrNull() ?: PokemonListViewModel.BELOW_RANGE
+                val upperLimit = binding.upperLimitEditText.text.toString().toIntOrNull() ?: PokemonListViewModel.ABOVE_RANGE
+                viewModel.setNewPokemonLimit(lowerLimit, upperLimit)
+                dialog.dismiss()
+            }
+
+            setNegativeButton(R.string.cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+
+            create().show()
         }
     }
 
@@ -97,6 +168,10 @@ class PokemonListFragment : Fragment(R.layout.pokemon_list_fragment) {
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                if (menuItem.itemId == R.id.action_change_range) {
+                    viewModel.triggerShowChangePokemonRangeDialogEvent()
+                    return true
+                }
                 return false
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
