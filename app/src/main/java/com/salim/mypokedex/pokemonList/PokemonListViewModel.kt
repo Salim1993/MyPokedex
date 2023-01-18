@@ -17,7 +17,7 @@ class PokemonListViewModel @Inject constructor(
     private var upperPokemonLimit = 151
 
     private val _pokemonList = MutableStateFlow(
-        convertStringListToPokemonNameAndIdList(pokemonListUseCase.pokemonListFlow.value)
+        convertStringListToPokemonNameAndIdList(pokemonListUseCase.getPokemonListFlow().value)
     )
     val pokemonList = _pokemonList.asStateFlow()
 
@@ -37,7 +37,7 @@ class PokemonListViewModel @Inject constructor(
     }
 
     private fun collectPokemonDataAndTransform() = viewModelScope.launch {
-        pokemonListUseCase.pokemonListFlow.collect { list ->
+        pokemonListUseCase.getPokemonListFlow().collect { list ->
             _pokemonList.emit(convertStringListToPokemonNameAndIdList(list))
         }
     }
@@ -50,7 +50,7 @@ class PokemonListViewModel @Inject constructor(
 
     private fun getPokemonList() = viewModelScope.launch {
         // offset needs to also include pokemon on boundary of lower limit, so minus one to include that one
-        pokemonListUseCase.getOriginal151List(calculateNumberOfPokemonInList(), lowerPokemonLimit - 1)
+        pokemonListUseCase.getPokemonList(calculateNumberOfPokemonInList(), lowerPokemonLimit - 1)
     }
 
     fun setNewPokemonLimit(lowerLimit: Int, upperLimit: Int) = viewModelScope.launch {
