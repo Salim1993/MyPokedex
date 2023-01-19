@@ -7,6 +7,7 @@ import io.mockk.impl.annotations.RelaxedMockK
 import junit.framework.Assert.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -138,5 +139,33 @@ internal class PokemonListViewModelTest {
         // assert
         val actualResult = viewModel.showChangePokemonRangeDialog.first()
         assertTrue(actualResult)
+    }
+
+    @Test
+    fun `setNewPokemonLimit with offset, make sure pokemon returned have correct id due to offset`() = runTest {
+        // arrange
+        val pokemonList = listOf("Bulbasaur", "Ivysaur", "Venusaur")
+        val newPokemonList = listOf("charmeleon", "charizard", "squirtle")
+        val mutableStateFlow = MutableStateFlow(pokemonList)
+        every { getPokemonListUseCase.getPokemonListFlow() } returns mutableStateFlow
+
+        //act
+        val viewModel = PokemonListViewModel(getPokemonListUseCase)
+        val lowerLimit = 5
+        val job = viewModel.setNewPokemonLimit(lowerLimit, 7)
+        job.join()
+
+        //refresh flow to trigger new list
+        val job2 = launch {
+            mutableStateFlow.emit(newPokemonList)
+        }
+        job2.join()
+
+        //assert
+        val expectedList = newPokemonList.mapIndexed { index, name ->
+            PokemonNameAndId(index + lowerLimit, name)
+        }
+        val actual = viewModel.pokemonList.value
+        assertEquals(expectedList, actual)
     }
 }

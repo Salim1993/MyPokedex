@@ -28,8 +28,9 @@ class GetPokemonListUseCaseImpl @Inject constructor(
     override suspend fun getPokemonList(number: Int, offset: Int) {
         try {
             withContext(Dispatchers.IO) {
-                val list = service.getListOfPokemon(number, offset).map { it.name }
-                Timber.d("Pokemon got from api: ${list[0]}")
+                val result = service.getListOfPokemon(number, offset)
+                val list = result.map { it.name }
+                Timber.d("Pokemon got from api: $list")
 
                 _pokemonListFlow.emit(list)
                 preferences.saveString(POKEMON_LIST_PREF, convertListToString(list))

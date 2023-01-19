@@ -43,7 +43,8 @@ class PokemonListViewModel @Inject constructor(
 
     private fun convertStringListToPokemonNameAndIdList(list: List<String>): List<PokemonNameAndId> {
         return list.mapIndexed { index, name ->
-            PokemonNameAndId(index + 1, name)
+            // need to add offset to pokemon id, since that's where we start our list
+            PokemonNameAndId(index + lowerPokemonLimit, name)
         }
     }
 
@@ -77,6 +78,9 @@ class PokemonListViewModel @Inject constructor(
     fun triggerShowChangePokemonRangeDialogEvent() = viewModelScope.launch {
         _showChangePokemonRangeDialog.emit(true)
     }
+
+    fun getLowerPokemonLimit(): Int = lowerPokemonLimit
+    fun getUpperPokemonLimit(): Int = upperPokemonLimit
 
     companion object {
         const val ABSOLUTE_LOWER_LIMIT = 1

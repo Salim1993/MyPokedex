@@ -114,6 +114,8 @@ class PokemonListFragment : Fragment(R.layout.pokemon_list_fragment) {
         with(builder) {
             setTitle(R.string.change_range_title)
             setView(view)
+            binding.lowerLimitEditText.setText(viewModel.getLowerPokemonLimit().toString())
+            binding.upperLimitEditText.setText(viewModel.getUpperPokemonLimit().toString())
             setPositiveButton(R.string.ok) { dialog, _ ->
                 val lowerLimit = binding.lowerLimitEditText.text.toString().toIntOrNull() ?: PokemonListViewModel.BELOW_RANGE
                 val upperLimit = binding.upperLimitEditText.text.toString().toIntOrNull() ?: PokemonListViewModel.ABOVE_RANGE
