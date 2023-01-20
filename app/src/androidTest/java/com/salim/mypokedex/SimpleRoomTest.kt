@@ -54,6 +54,6 @@ class SimpleRoomTest {
         dao.updatePokemonDetail(pokemon)
 
         val pokemonByName = dao.getSpecificPokemon("bulbasaur")
-        assertThat(pokemonByName.first(), equalTo(pokemon))
+        assertEquals(pokemonByName.first(), pokemon)
     }
 }
