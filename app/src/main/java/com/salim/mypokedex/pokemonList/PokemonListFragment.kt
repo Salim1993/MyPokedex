@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.salim.mypokedex.R
 import com.salim.mypokedex.databinding.PokemonListFragmentBinding
 import com.salim.mypokedex.databinding.RangePokemonDailogBinding
+import com.salim.mypokedex.utilities.EspressoIdlingResource
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -92,6 +93,7 @@ class PokemonListFragment : Fragment(R.layout.pokemon_list_fragment) {
             }
             .create()
             .show()
+        EspressoIdlingResource.decrement()
     }
 
     private fun showLowerLimitToLowDialog() {
@@ -103,6 +105,7 @@ class PokemonListFragment : Fragment(R.layout.pokemon_list_fragment) {
             }
             .create()
             .show()
+        EspressoIdlingResource.decrement()
     }
 
     private fun createRangeDialog() {
@@ -117,16 +120,15 @@ class PokemonListFragment : Fragment(R.layout.pokemon_list_fragment) {
             binding.lowerLimitEditText.setText(viewModel.getLowerPokemonLimit().toString())
             binding.upperLimitEditText.setText(viewModel.getUpperPokemonLimit().toString())
             setPositiveButton(R.string.ok) { dialog, _ ->
+                EspressoIdlingResource.increment()
                 val lowerLimit = binding.lowerLimitEditText.text.toString().toIntOrNull() ?: PokemonListViewModel.BELOW_RANGE
                 val upperLimit = binding.upperLimitEditText.text.toString().toIntOrNull() ?: PokemonListViewModel.ABOVE_RANGE
                 viewModel.setNewPokemonLimit(lowerLimit, upperLimit)
                 dialog.dismiss()
             }
-
             setNegativeButton(R.string.cancel) { dialog, _ ->
                 dialog.dismiss()
             }
-
             create().show()
         }
     }

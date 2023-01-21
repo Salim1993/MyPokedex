@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.salim.mypokedex.databinding.PokemonListItemBinding
 import com.salim.mypokedex.pokemon.PokemonNameAndId
+import com.salim.mypokedex.utilities.EspressoIdlingResource
 import java.util.ArrayList
 
 class PokemonListAdapter(private var pokemonList: List<PokemonNameAndId>, private val onClick: (String) -> Unit)
@@ -35,6 +36,7 @@ class PokemonListAdapter(private var pokemonList: List<PokemonNameAndId>, privat
 
         pokemonList = newList
         diff.dispatchUpdatesTo(this)
+        EspressoIdlingResource.decrement()
     }
 
     inner class PokemonItemViewHolder(val binding: PokemonListItemBinding)
