@@ -16,6 +16,7 @@ import com.salim.mypokedex.R
 import com.salim.mypokedex.testHelpers.EspressoUtilities.atPosition
 import com.salim.mypokedex.testHelpers.EspressoUtilities.typeSearchViewText
 import com.salim.mypokedex.utilities.EspressoIdlingResource
+import com.salim.mypokedex.utilities.EspressoIdlingResourceRule
 import org.hamcrest.CoreMatchers.containsString
 import org.junit.After
 import org.junit.Before
@@ -35,15 +36,8 @@ class PokemonListFragmentTest {
     @get:Rule
     val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
-    @Before
-    fun registerIdlingResource() {
-        IdlingRegistry.getInstance().register(EspressoIdlingResource.countingIdlingResource)
-    }
-
-    @After
-    fun unregisterIdlingResource() {
-        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.countingIdlingResource)
-    }
+    @get:Rule
+    val espressoIdlingResourceRule = EspressoIdlingResourceRule()
 
     @Test
     fun clickBulbasaurInPokemonList_GoToPokemonDetails_CheckIfTextNameIsCorrect() {
