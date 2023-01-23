@@ -30,4 +30,21 @@
     <string name="range_description">Please change the range of pokemon you would like to see. Range is between 1 to 1279.</string>
     <string name="lower_limit_content_description">Please enter number for lower limit of range for pokemon you would like to see.</string>
     <string name="upper_limit_content_description">Please enter number for upper limit of range for pokemon you would like to see.</string>
+
+    <!-- Profile -->
+    <string name="profile">Profile</string>
+    <string name="go_to_profile">Go To Profile</string>
+    <string name="name_profile">Name</string>
+    <string name="name_profile_hint">Enter Name</string>
+    <string name="email">Email</string>
+    <string name="email_hint">Enter Email</string>
+    <string name="avatar_content_description">Picture of avatar. Click on avatar to change it.</string>
+    <string name="save_profile">Save Profile</string>
+    <string name="profile_updated">Your profile has been updated.</string>
+
+    <!-- avatar -->
+    <string name="avatar">Avatar</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="avatar_description">Do you want to update your avatar? Pick one of the options below.</string>
 </resources>

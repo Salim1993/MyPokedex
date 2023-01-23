@@ -24,6 +24,9 @@ class PokemonListViewModel @Inject constructor(
     private val _showChangePokemonRangeDialog = MutableSharedFlow<Boolean>()
     val showChangePokemonRangeDialog = _showChangePokemonRangeDialog.asSharedFlow()
 
+    private val _goToProfileEvent = MutableSharedFlow<Boolean>()
+    val goToProfileEvent = _goToProfileEvent.asSharedFlow()
+
     // error states
     private val _isUpperLimitToHighFlow = MutableSharedFlow<Boolean>()
     val isUpperLimitToHighFlow = _isUpperLimitToHighFlow.asSharedFlow()
@@ -81,6 +84,10 @@ class PokemonListViewModel @Inject constructor(
 
     fun getLowerPokemonLimit(): Int = lowerPokemonLimit
     fun getUpperPokemonLimit(): Int = upperPokemonLimit
+
+    fun triggerGoToProfileEvent() = viewModelScope.launch {
+        _goToProfileEvent.emit(true)
+    }
 
     companion object {
         const val ABSOLUTE_LOWER_LIMIT = 1

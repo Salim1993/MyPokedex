@@ -11,4 +11,7 @@
         android:title="@string/action_change_pokemon_range"
         android:icon="@drawable/ic_baseline_height_24"/>
 
+    <item android:id="@+id/action_profile"
+        android:title="@string/go_to_profile"/>
+
 </menu>

@@ -23,10 +23,13 @@ object NetworkingModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit {
-        val moshi = Moshi.Builder().add(Wrapped.ADAPTER_FACTORY).add(KotlinJsonAdapterFactory()).build()
-        //val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+    fun provideMoshi(): Moshi {
+        return Moshi.Builder().add(Wrapped.ADAPTER_FACTORY).add(KotlinJsonAdapterFactory()).build()
+    }
 
+    @Provides
+    @Singleton
+    fun provideRetrofit(moshi: Moshi): Retrofit {
         return Retrofit.Builder()
             .baseUrl(POKEDEX_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))

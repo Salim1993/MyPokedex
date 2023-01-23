@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_pokemonListFragment_to_pokemonDetailsFragment"
             app:destination="@id/pokemonDetailsFragment" />
+        <action
+            android:id="@+id/action_pokemonListFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/pokemonDetailsFragment"
@@ -22,4 +25,9 @@
             android:name="pokemonName"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.salim.mypokedex.profile.ProfileFragment"
+        android:label="@string/profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

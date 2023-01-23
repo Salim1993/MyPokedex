@@ -20,17 +20,14 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.salim.mypokedex.pokemon.Pokemon
 import com.salim.mypokedex.pokemon.PokemonDao
-import com.salim.mypokedex.profile.Profile
-import com.salim.mypokedex.profile.ProfileDao
 
 /**
  * SQLite Database for storing the logs.
  */
-@Database(entities = [Pokemon::class, Profile::class], version = 1, exportSchema = false)
+@Database(entities = [Pokemon::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun pokemonDao(): PokemonDao
-    abstract fun profileDao(): ProfileDao
 
     companion object {
         const val DATABASE_NAME = "pokedex.db"

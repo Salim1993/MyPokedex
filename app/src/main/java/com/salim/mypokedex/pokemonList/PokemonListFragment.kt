@@ -77,6 +77,11 @@ class PokemonListFragment : Fragment(R.layout.pokemon_list_fragment) {
                 if(it)
                     showLowerLimitToLowDialog()
             }
+
+            goToProfileEvent.asLiveData().observe(viewLifecycleOwner) {
+                if (it)
+                    findNavController().navigate(R.id.profileFragment)
+            }
         }
     }
 
@@ -177,6 +182,8 @@ class PokemonListFragment : Fragment(R.layout.pokemon_list_fragment) {
                 if (menuItem.itemId == R.id.action_change_range) {
                     viewModel.triggerShowChangePokemonRangeDialogEvent()
                     return true
+                } else if (menuItem.itemId == R.id.action_profile) {
+                    viewModel.triggerGoToProfileEvent()
                 }
                 return false
             }

@@ -5,8 +5,7 @@ import androidx.room.PrimaryKey
 
 
 /**
- * A data class representing a user profile. Using Room to save info instead of shared preference
- * because want to use this as excuse to write room migration and test those migrations.
+ * A data class representing a user profile.
  *
  * @property name The name of the user.
  * @property email The email address of the user.
