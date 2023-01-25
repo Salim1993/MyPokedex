@@ -44,6 +44,7 @@
 
     <!-- avatar -->
     <string name="avatar">Avatar</string>
+    <string name="update_avatar">Update Avatar</string>
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
     <string name="avatar_description">Do you want to update your avatar? Pick one of the options below.</string>

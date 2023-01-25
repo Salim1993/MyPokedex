@@ -14,9 +14,12 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
+import androidx.test.espresso.idling.CountingIdlingResource
 import com.bumptech.glide.Glide
 import com.salim.mypokedex.R
 import com.salim.mypokedex.databinding.FragmentProfileBinding
+import com.salim.mypokedex.utilities.EspressoCounterIdlingResource
+import com.salim.mypokedex.utilities.GlideIdlingResourceTarget
 import com.salim.mypokedex.utilities.TakePictureWithUriReturnContract
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
@@ -50,6 +53,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentProfileBinding.bind(view)
+        EspressoCounterIdlingResource.increment()
 
         setupViews()
         setupObservers()
@@ -57,7 +61,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private fun setupViews() {
         with(binding) {
-            avatarView.setOnClickListener {
+            updateAvatarButton.setOnClickListener {
                 viewModel.triggerShowAvatarOptionsDialogEvent()
             }
 
@@ -79,7 +83,15 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
                     if(it.avatarImageLocation.isNotEmpty()) {
                         val uri = Uri.parse(it.avatarImageLocation)
-                        Glide.with(this@ProfileFragment).load(uri).into(binding.avatarView)
+                        Glide.with(this@ProfileFragment).load(uri).into(
+                            GlideIdlingResourceTarget(
+                                EspressoCounterIdlingResource,
+                                binding.avatarView
+                            )
+                        )
+                        EspressoCounterIdlingResource.decrement()
+                    } else {
+                        EspressoCounterIdlingResource.decrement()
                     }
                 }
             }

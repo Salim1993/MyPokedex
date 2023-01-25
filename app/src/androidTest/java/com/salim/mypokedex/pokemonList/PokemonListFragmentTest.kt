@@ -2,7 +2,6 @@ package com.salim.mypokedex.pokemonList
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu
-import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -15,11 +14,8 @@ import com.salim.mypokedex.MainActivity
 import com.salim.mypokedex.R
 import com.salim.mypokedex.testHelpers.EspressoUtilities.atPosition
 import com.salim.mypokedex.testHelpers.EspressoUtilities.typeSearchViewText
-import com.salim.mypokedex.utilities.EspressoIdlingResource
 import com.salim.mypokedex.utilities.EspressoIdlingResourceRule
 import org.hamcrest.CoreMatchers.containsString
-import org.junit.After
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith

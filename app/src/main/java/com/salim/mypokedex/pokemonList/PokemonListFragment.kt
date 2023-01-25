@@ -1,14 +1,11 @@
 package com.salim.mypokedex.pokemonList
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.AlertDialogLayout
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -22,7 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.salim.mypokedex.R
 import com.salim.mypokedex.databinding.PokemonListFragmentBinding
 import com.salim.mypokedex.databinding.RangePokemonDailogBinding
-import com.salim.mypokedex.utilities.EspressoIdlingResource
+import com.salim.mypokedex.utilities.EspressoCounterIdlingResource
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -98,7 +95,7 @@ class PokemonListFragment : Fragment(R.layout.pokemon_list_fragment) {
             }
             .create()
             .show()
-        EspressoIdlingResource.decrement()
+        EspressoCounterIdlingResource.decrement()
     }
 
     private fun showLowerLimitToLowDialog() {
@@ -110,7 +107,7 @@ class PokemonListFragment : Fragment(R.layout.pokemon_list_fragment) {
             }
             .create()
             .show()
-        EspressoIdlingResource.decrement()
+        EspressoCounterIdlingResource.decrement()
     }
 
     private fun createRangeDialog() {
@@ -125,7 +122,7 @@ class PokemonListFragment : Fragment(R.layout.pokemon_list_fragment) {
             binding.lowerLimitEditText.setText(viewModel.getLowerPokemonLimit().toString())
             binding.upperLimitEditText.setText(viewModel.getUpperPokemonLimit().toString())
             setPositiveButton(R.string.ok) { dialog, _ ->
-                EspressoIdlingResource.increment()
+                EspressoCounterIdlingResource.increment()
                 val lowerLimit = binding.lowerLimitEditText.text.toString().toIntOrNull() ?: PokemonListViewModel.BELOW_RANGE
                 val upperLimit = binding.upperLimitEditText.text.toString().toIntOrNull() ?: PokemonListViewModel.ABOVE_RANGE
                 viewModel.setNewPokemonLimit(lowerLimit, upperLimit)

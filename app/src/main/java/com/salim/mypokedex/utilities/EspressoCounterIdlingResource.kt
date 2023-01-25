@@ -2,7 +2,7 @@ package com.salim.mypokedex.utilities
 
 import androidx.test.espresso.idling.CountingIdlingResource
 
-object EspressoIdlingResource {
+object EspressoCounterIdlingResource {
 
     private const val RESOURCE = "GLOBAL"
 

@@ -19,6 +19,17 @@
         tools:src="@drawable/large_drawable"
         tools:ignore="RedundantDescriptionCheck"/>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/update_avatar_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:strokeColor="@color/grey"
+        android:backgroundTint="@color/grey"
+        android:textColor="@color/white"
+        app:cornerRadius="4dp"
+        android:text="@string/update_avatar" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

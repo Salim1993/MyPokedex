@@ -6,7 +6,7 @@ import org.junit.runner.Description
 
 class EspressoIdlingResourceRule: TestWatcher() {
 
-    private val idlingResource = EspressoIdlingResource.countingIdlingResource
+    private val idlingResource = EspressoCounterIdlingResource.countingIdlingResource
 
     override fun starting(description: Description) {
         IdlingRegistry.getInstance().unregister(idlingResource)

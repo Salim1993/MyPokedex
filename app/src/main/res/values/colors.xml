@@ -11,4 +11,5 @@
 
     <color name="colorPrimary">#DF1405</color>
     <color name="colorPrimaryDarker">#9C0C02</color>
+    <color name="grey">#535353</color>
 </resources>
