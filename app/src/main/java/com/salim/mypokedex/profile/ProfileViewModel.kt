@@ -13,8 +13,8 @@ class ProfileViewModel @Inject constructor(
     private val profileUseCase: ProfileUseCase
 ): ViewModel() {
 
-    val profileFlow = profileUseCase.profileFlow
-    val profileUpdatedEventFlow = profileUseCase.profileUpdatedEventFlow
+    val profileFlow = profileUseCase.getProfileFlow()
+    val profileUpdatedEventFlow = profileUseCase.getProfileUpdatedEventFlow()
 
     private val _showAvatarDialogEvent = MutableSharedFlow<Boolean>()
     val showAvatarDialogEvent = _showAvatarDialogEvent.asSharedFlow()
