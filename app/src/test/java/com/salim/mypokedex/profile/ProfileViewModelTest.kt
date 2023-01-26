@@ -7,7 +7,6 @@ import io.mockk.impl.annotations.RelaxedMockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Before
@@ -59,11 +58,11 @@ class ProfileViewModelTest {
     @Test
     fun `submitNewAvatar updates new profile and returns it in the flow`() = runTest {
         // arrange
-        val fakeGetProfileUseCase = FakeGetProfileUseCase()
+        val fakeProfileUseCase = FakeProfileUseCase()
         val expectedImage = "image"
 
         // act
-        val unitToTest = ProfileViewModel(fakeGetProfileUseCase)
+        val unitToTest = ProfileViewModel(fakeProfileUseCase)
         val job = unitToTest.submitNewAvatar(expectedImage)
         job.join()
 
@@ -77,12 +76,12 @@ class ProfileViewModelTest {
     fun `submitNewAvatar updates old profile with new avatar and returns it in the flow`() = runTest {
         // arrange
         val oldProfile = Profile("salim", "lmao@gmail.com", "")
-        val fakeGetProfileUseCase = FakeGetProfileUseCase()
-        fakeGetProfileUseCase.setProfileToReceiveFromCache(oldProfile)
+        val fakeProfileUseCase = FakeProfileUseCase()
+        fakeProfileUseCase.setProfileToReceiveFromCache(oldProfile)
         val expectedImage = "image"
 
         // act
-        val unitToTest = ProfileViewModel(fakeGetProfileUseCase)
+        val unitToTest = ProfileViewModel(fakeProfileUseCase)
         val job = unitToTest.submitNewAvatar(expectedImage)
         job.join()
 
@@ -95,11 +94,11 @@ class ProfileViewModelTest {
     @Test
     fun `submitNewProfileInfo updates new profile and returns it in the flow`() = runTest {
         // arrange
-        val fakeGetProfileUseCase = FakeGetProfileUseCase()
+        val fakeProfileUseCase = FakeProfileUseCase()
         val expectedName = "salim"
 
         // act
-        val unitToTest = ProfileViewModel(fakeGetProfileUseCase)
+        val unitToTest = ProfileViewModel(fakeProfileUseCase)
         val job = unitToTest.submitNewProfileInfo(expectedName, "")
         job.join()
 
@@ -113,13 +112,13 @@ class ProfileViewModelTest {
     fun `submitNewProfileInfo updates old profile with new name and email and returns it in the flow`() = runTest {
         // arrange
         val oldProfile = Profile("george", "lmao@gmail.com", "image")
-        val fakeGetProfileUseCase = FakeGetProfileUseCase()
-        fakeGetProfileUseCase.setProfileToReceiveFromCache(oldProfile)
+        val fakeProfileUseCase = FakeProfileUseCase()
+        fakeProfileUseCase.setProfileToReceiveFromCache(oldProfile)
         val expectedName = "salim"
         val expectedEmail = "rofl@yahoo.ca"
 
         // act
-        val unitToTest = ProfileViewModel(fakeGetProfileUseCase)
+        val unitToTest = ProfileViewModel(fakeProfileUseCase)
         val job = unitToTest.submitNewProfileInfo(expectedName, expectedEmail)
         job.join()
 
@@ -133,13 +132,13 @@ class ProfileViewModelTest {
     fun `submitNewProfileInfo updates old profile with empty name and email and returns it in the flow with new fields empty`() = runTest {
         // arrange
         val oldProfile = Profile("george", "lmao@gmail.com", "image")
-        val fakeGetProfileUseCase = FakeGetProfileUseCase()
-        fakeGetProfileUseCase.setProfileToReceiveFromCache(oldProfile)
+        val fakeProfileUseCase = FakeProfileUseCase()
+        fakeProfileUseCase.setProfileToReceiveFromCache(oldProfile)
         val expectedName = ""
         val expectedEmail = ""
 
         // act
-        val unitToTest = ProfileViewModel(fakeGetProfileUseCase)
+        val unitToTest = ProfileViewModel(fakeProfileUseCase)
         val job = unitToTest.submitNewProfileInfo(expectedName, expectedEmail)
         job.join()
 

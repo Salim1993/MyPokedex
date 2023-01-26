@@ -15,6 +15,8 @@ import com.salim.mypokedex.R
 import com.salim.mypokedex.testHelpers.EspressoUtilities.atPosition
 import com.salim.mypokedex.testHelpers.EspressoUtilities.typeSearchViewText
 import com.salim.mypokedex.utilities.EspressoIdlingResourceRule
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import org.hamcrest.CoreMatchers.containsString
 import org.junit.Rule
 import org.junit.Test
@@ -27,7 +29,11 @@ import org.junit.runner.RunWith
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
 class PokemonListFragmentTest {
+
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
 
     @get:Rule
     val activityRule = ActivityScenarioRule(MainActivity::class.java)

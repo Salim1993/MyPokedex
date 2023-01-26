@@ -2,7 +2,7 @@ package com.salim.mypokedex.profile
 
 import kotlinx.coroutines.flow.*
 
-class FakeGetProfileUseCase: ProfileUseCase {
+class FakeProfileUseCase: ProfileUseCase {
 
     private var profileToReceiveFromCache = Profile(
         name = "",

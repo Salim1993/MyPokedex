@@ -19,9 +19,22 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.salim.mypokedex.R
+import com.salim.mypokedex.di.ViewModelModule
+import com.salim.mypokedex.networking.PokedexApiService
+import com.salim.mypokedex.pokemonList.GetPokemonListUseCase
+import com.salim.mypokedex.pokemonList.GetPokemonListUseCaseImpl
 import com.salim.mypokedex.testHelpers.launchFragmentInHiltContainer
 import com.salim.mypokedex.utilities.EspressoIdlingResourceRule
 import com.salim.mypokedex.utilities.ImageViewHasDrawableMatcher
+import com.salim.mypokedex.utilities.SharedPreferencesWrapper
+import com.squareup.moshi.Moshi
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runTest
@@ -32,9 +45,13 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(AndroidJUnit4::class)
+@UninstallModules(ViewModelModule::class)
+@HiltAndroidTest
 class ProfileFragmentTest {
+
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
 
     @get: Rule
     val intentsRule = IntentsRule()
@@ -44,7 +61,7 @@ class ProfileFragmentTest {
 
     @Test
     fun test_validateGalleryIntent() {
-        val scenario = launchFragmentInHiltContainer<ProfileFragment>()
+        launchFragmentInHiltContainer<ProfileFragment>()
 
         // Given
         val expectedIntent: Matcher<Intent> = allOf(
@@ -63,13 +80,12 @@ class ProfileFragmentTest {
         onView(withText(galleryString)).perform(click())
         intended(expectedIntent)
 
-        // TODO: below doesnt work because drawable isnt being set properly in test.
-        //onView(withId(R.id.avatar_view)).check(matches(ImageViewHasDrawableMatcher.hasDrawable()))
+        onView(withId(R.id.avatar_view)).check(matches(ImageViewHasDrawableMatcher.hasDrawable()))
     }
 
     @Test
     fun test_cameraIntentIsCorrect() {
-        val scenario = launchFragmentInHiltContainer<ProfileFragment>()
+        launchFragmentInHiltContainer<ProfileFragment>()
 
         // given
         val activityResult = createImageCaptureActivityResultStub()
@@ -85,11 +101,12 @@ class ProfileFragmentTest {
     }
 
     private fun createGalleryPickActivityResultStub(): ActivityResult {
+
         val resources = InstrumentationRegistry.getInstrumentation().context.resources
         val imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
             resources.getResourcePackageName(R.drawable.ic_launcher_background) + "://" +
             resources.getResourceTypeName(R.drawable.ic_launcher_background) + "://" +
-            resources.getResourceEntryName(R.drawable.ic_launcher_background)
+                R.drawable.ic_launcher_background
         )
         val resultIntent = Intent()
         resultIntent.data = imageUri
@@ -99,5 +116,23 @@ class ProfileFragmentTest {
     private fun createImageCaptureActivityResultStub(): ActivityResult {
         val resultIntent = Intent()
         return ActivityResult(Activity.RESULT_OK, resultIntent)
+    }
+
+    @Module
+    @InstallIn(ViewModelComponent::class)
+    object TestModule {
+
+        @Provides
+        fun provideGetPokemonListUseCase(
+            service: PokedexApiService,
+            preferences: SharedPreferencesWrapper
+        ): GetPokemonListUseCase {
+            return GetPokemonListUseCaseImpl(service, preferences)
+        }
+
+        @Provides
+        fun provideProfileUseCase(): ProfileUseCase {
+            return FakeProfileUseCase()
+        }
     }
 }
