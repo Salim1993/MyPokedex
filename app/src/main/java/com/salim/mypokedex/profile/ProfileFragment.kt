@@ -1,21 +1,17 @@
 package com.salim.mypokedex.profile
 
 import android.app.AlertDialog
-import android.content.ActivityNotFoundException
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.provider.MediaStore
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
-import androidx.test.espresso.idling.CountingIdlingResource
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.salim.mypokedex.R
 import com.salim.mypokedex.databinding.FragmentProfileBinding
 import com.salim.mypokedex.utilities.EspressoCounterIdlingResource
@@ -106,7 +102,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
             profileUpdatedEventFlow.asLiveData().observe(viewLifecycleOwner) {
                 if (it) {
-                    Toast.makeText(requireContext(), R.string.profile_updated, Toast.LENGTH_LONG).show()
+                    Snackbar.make(binding.root, R.string.profile_updated, Snackbar.LENGTH_LONG).show()
                 }
             }
         }

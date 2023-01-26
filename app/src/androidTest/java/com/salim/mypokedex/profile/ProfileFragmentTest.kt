@@ -5,7 +5,6 @@ import android.app.Instrumentation.ActivityResult
 import android.content.ContentResolver
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
 import android.provider.MediaStore
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
@@ -16,7 +15,6 @@ import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.Intents.intending
 import androidx.test.espresso.intent.matcher.IntentMatchers.*
 import androidx.test.espresso.intent.rule.IntentsRule
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -29,8 +27,6 @@ import com.salim.mypokedex.testHelpers.launchFragmentInHiltContainer
 import com.salim.mypokedex.utilities.EspressoIdlingResourceRule
 import com.salim.mypokedex.utilities.ImageViewHasDrawableMatcher
 import com.salim.mypokedex.utilities.SharedPreferencesWrapper
-import com.salim.mypokedex.utilities.ToastMatcher
-import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,9 +34,6 @@ import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.test.runTest
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.Matcher
@@ -116,8 +109,7 @@ class ProfileFragmentTest {
         onView(isRoot()).perform(ViewActions.closeSoftKeyboard())
         onView(withId(R.id.save_profile_button)).perform(click())
 
-        //TODO: commenting out below, apparently many people have issues asserting on toast. Check link: https://github.com/android/android-test/issues/803
-        //onView(withText(R.string.profile_updated)).inRoot(ToastMatcher()).check(matches(isDisplayed()))
+        onView(withId(com.google.android.material.R.id.snackbar_text)).check(matches(withText(R.string.profile_updated)))
         onView(withId(R.id.name_edit_text)).check(matches(withText(containsString("salim"))))
         onView(withId(R.id.email_edit_text)).check(matches(withText(containsString("salimbenkhaled@gmail.com"))))
     }
