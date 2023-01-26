@@ -93,6 +93,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     } else {
                         EspressoCounterIdlingResource.decrement()
                     }
+                } else {
+                    EspressoCounterIdlingResource.decrement()
                 }
             }
 
@@ -134,7 +136,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     }
 
     private fun showCameraV2() {
-        //val uri = Uri.fromFile(createImageFile())
         EspressoCounterIdlingResource.increment()
         val uri = FileProvider.getUriForFile(
             requireContext(),
@@ -142,15 +143,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             createImageFile()
         )
         cameraIntent.launch(uri)
-    }
-
-    private fun showCamera() {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        try {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-        } catch (e: ActivityNotFoundException) {
-            // display error state to the user
-        }
     }
 
     @Throws(IOException::class)
@@ -169,7 +161,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     }
 
     companion object {
-        const val REQUEST_IMAGE_CAPTURE = 1234
         const val IMAGE_TYPE = "image/*"
     }
 }
