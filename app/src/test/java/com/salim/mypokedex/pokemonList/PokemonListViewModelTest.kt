@@ -1,12 +1,16 @@
 package com.salim.mypokedex.pokemonList
 
-import com.salim.mypokedex.MainDispatcherRule
+import com.salim.mypokedex.CustomMainDispatcherRule
 import com.salim.mypokedex.pokemon.PokemonNameAndId
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
-import junit.framework.Assert.*
+import junit.framework.Assert.assertEquals
+import junit.framework.Assert.assertTrue
+import junit.framework.Assert.assertFalse
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -19,7 +23,7 @@ import org.junit.Test
 internal class PokemonListViewModelTest {
 
     @get:Rule
-    val mainDispatcherRule = MainDispatcherRule()
+    val customMainDispatcherRule = CustomMainDispatcherRule()
 
     @RelaxedMockK
     lateinit var getPokemonListUseCase: GetPokemonListUseCaseImpl
@@ -60,7 +64,8 @@ internal class PokemonListViewModelTest {
         assertEquals(expectedList, viewModel.pokemonList.value)
     }
 
-    // Running into issues with this test becuase it seems coEvery is broken when using certain version of coroutines library.
+    // Running into issues with this test becuase it seems coEvery is broken
+    // when using certain version of coroutines library.
     // See following link: https://github.com/mockk/mockk/issues/554
     // Going to make a fake class instead and use that to assert for tests instead.
     @Test

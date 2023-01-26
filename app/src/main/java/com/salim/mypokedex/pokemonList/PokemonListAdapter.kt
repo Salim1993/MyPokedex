@@ -41,7 +41,10 @@ class PokemonListAdapter(private var pokemonList: List<PokemonNameAndId>, privat
     inner class PokemonItemViewHolder(val binding: PokemonListItemBinding)
         :RecyclerView.ViewHolder(binding.root)
 
-    class PokemonListDiffUtilCallback(private val oldList: List<PokemonNameAndId>, private val newList: List<PokemonNameAndId>): DiffUtil.Callback() {
+    class PokemonListDiffUtilCallback(
+            private val oldList: List<PokemonNameAndId>,
+            private val newList: List<PokemonNameAndId>
+        ): DiffUtil.Callback() {
 
         override fun getOldListSize(): Int = oldList.size
         override fun getNewListSize(): Int = newList.size

@@ -123,8 +123,10 @@ class PokemonListFragment : Fragment(R.layout.pokemon_list_fragment) {
             binding.upperLimitEditText.setText(viewModel.getUpperPokemonLimit().toString())
             setPositiveButton(R.string.ok) { dialog, _ ->
                 EspressoCounterIdlingResource.increment()
-                val lowerLimit = binding.lowerLimitEditText.text.toString().toIntOrNull() ?: PokemonListViewModel.BELOW_RANGE
-                val upperLimit = binding.upperLimitEditText.text.toString().toIntOrNull() ?: PokemonListViewModel.ABOVE_RANGE
+                val lowerLimit = binding.lowerLimitEditText.text.toString().toIntOrNull()
+                    ?: PokemonListViewModel.BELOW_RANGE
+                val upperLimit = binding.upperLimitEditText.text.toString().toIntOrNull()
+                    ?: PokemonListViewModel.ABOVE_RANGE
                 viewModel.setNewPokemonLimit(lowerLimit, upperLimit)
                 dialog.dismiss()
             }

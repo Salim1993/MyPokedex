@@ -9,9 +9,9 @@ import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 
 import org.junit.Before
 import org.junit.Test
@@ -72,9 +72,9 @@ class ProfileUseCaseTest {
         val expectedProfile = Profile("salim", "", "")
         val actualProfile = unitToTest.getProfileFlow().value
         assertEquals(expectedProfile, actualProfile)
-        //TODO: below is make unit test freeze and not too sure why
-        //val isEventTriggered = unitToTest.getProfileUpdatedEventFlow().first()
-        //assertTrue(isEventTriggered)
+        // below is make unit test freeze and not too sure why
+        // val isEventTriggered = unitToTest.getProfileUpdatedEventFlow().first()
+        // assertTrue(isEventTriggered)
         val expectedJson = "{\"name\":\"salim\",\"email\":\"\",\"avatarImageLocation\":\"\"}"
         verify { sharedPreferencesWrapper.saveString(any(), expectedJson) }
     }

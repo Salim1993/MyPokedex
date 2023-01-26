@@ -3,15 +3,19 @@ package com.salim.mypokedex.pokemonDetails
 import com.salim.mypokedex.PokemonTestData.TEST_POKEMON
 import com.salim.mypokedex.PokemonTestData.TEST_POKEMON_DETAIL_SCHEMA
 import com.salim.mypokedex.networking.PokedexApiService
-import com.salim.mypokedex.pokemon.*
-import io.mockk.*
+import com.salim.mypokedex.pokemon.PokemonDao
+import io.mockk.MockKAnnotations
+import io.mockk.every
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.mockk
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 
 import org.junit.Before
 import org.junit.Test

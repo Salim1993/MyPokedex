@@ -30,7 +30,7 @@ class GlideIdlingResourceTarget(
         isLoading = true
         val handler = Handler(Looper.getMainLooper())
         // If we cannot get a valid size during the delay (1000ms) then set isLoading to false
-        handler.postDelayed(checkSizeTimeOutRunnable, 1_000)
+        handler.postDelayed(checkSizeTimeOutRunnable, DELAY_TIMER)
         getSize { _, _ ->
             // This callback will only be called if the size is valid
             handler.removeCallbacks(checkSizeTimeOutRunnable)
@@ -51,5 +51,9 @@ class GlideIdlingResourceTarget(
     override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
         isLoading = false
         super.onResourceReady(resource, transition)
+    }
+
+    companion object {
+        private const val DELAY_TIMER = 1000L
     }
 }

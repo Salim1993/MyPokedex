@@ -1,6 +1,40 @@
 package com.salim.mypokedex
 
-import com.salim.mypokedex.pokemon.*
+import com.salim.mypokedex.pokemon.Pokemon
+import com.salim.mypokedex.pokemon.PokemonDetailSchema
+import com.salim.mypokedex.pokemon.Species
+import com.salim.mypokedex.pokemon.Sprites
+import com.salim.mypokedex.pokemon.Other
+import com.salim.mypokedex.pokemon.DreamWorld
+import com.salim.mypokedex.pokemon.Home
+import com.salim.mypokedex.pokemon.OfficialArtwork
+import com.salim.mypokedex.pokemon.Versions
+import com.salim.mypokedex.pokemon.GenerationI
+import com.salim.mypokedex.pokemon.RedBlue
+import com.salim.mypokedex.pokemon.Yellow
+import com.salim.mypokedex.pokemon.GenerationIi
+import com.salim.mypokedex.pokemon.Crystal
+import com.salim.mypokedex.pokemon.Gold
+import com.salim.mypokedex.pokemon.Silver
+import com.salim.mypokedex.pokemon.GenerationIii
+import com.salim.mypokedex.pokemon.RubySapphire
+import com.salim.mypokedex.pokemon.Emerald
+import com.salim.mypokedex.pokemon.FireredLeafgreen
+import com.salim.mypokedex.pokemon.GenerationIv
+import com.salim.mypokedex.pokemon.DiamondPearl
+import com.salim.mypokedex.pokemon.Platinum
+import com.salim.mypokedex.pokemon.HeartgoldSoulsilver
+import com.salim.mypokedex.pokemon.GenerationV
+import com.salim.mypokedex.pokemon.BlackWhite
+import com.salim.mypokedex.pokemon.Animated
+import com.salim.mypokedex.pokemon.GenerationVi
+import com.salim.mypokedex.pokemon.XY
+import com.salim.mypokedex.pokemon.OmegarubyAlphasapphire
+import com.salim.mypokedex.pokemon.GenerationVii
+import com.salim.mypokedex.pokemon.Icons
+import com.salim.mypokedex.pokemon.UltraSunUltraMoon
+import com.salim.mypokedex.pokemon.GenerationViii
+import com.salim.mypokedex.pokemon.IconsX
 
 object PokemonTestData {
 

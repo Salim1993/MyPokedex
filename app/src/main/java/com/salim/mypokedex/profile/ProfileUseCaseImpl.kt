@@ -2,7 +2,12 @@ package com.salim.mypokedex.profile
 
 import com.salim.mypokedex.utilities.SharedPreferencesWrapper
 import com.squareup.moshi.Moshi
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import javax.inject.Inject
 
 class ProfileUseCaseImpl @Inject constructor(

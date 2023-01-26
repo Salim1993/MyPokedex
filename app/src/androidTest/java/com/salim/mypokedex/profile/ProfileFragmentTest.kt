@@ -13,9 +13,13 @@ import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.Intents.intending
-import androidx.test.espresso.intent.matcher.IntentMatchers.*
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasCategories
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasType
 import androidx.test.espresso.intent.rule.IntentsRule
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.salim.mypokedex.R
@@ -37,7 +41,6 @@ import dagger.hilt.android.testing.UninstallModules
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.Matcher
-import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -109,7 +112,8 @@ class ProfileFragmentTest {
         onView(isRoot()).perform(ViewActions.closeSoftKeyboard())
         onView(withId(R.id.save_profile_button)).perform(click())
 
-        onView(withId(com.google.android.material.R.id.snackbar_text)).check(matches(withText(R.string.profile_updated)))
+        onView(withId(com.google.android.material.R.id.snackbar_text))
+            .check(matches(withText(R.string.profile_updated)))
         onView(withId(R.id.name_edit_text)).check(matches(withText(containsString("salim"))))
         onView(withId(R.id.email_edit_text)).check(matches(withText(containsString("salimbenkhaled@gmail.com"))))
     }

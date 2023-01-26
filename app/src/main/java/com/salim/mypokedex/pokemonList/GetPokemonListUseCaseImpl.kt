@@ -36,7 +36,7 @@ class GetPokemonListUseCaseImpl @Inject constructor(
                 preferences.saveString(POKEMON_LIST_PREF, convertListToString(list))
             }
         } catch (e: HttpException) {
-            e.printStackTrace()
+            Timber.e("Got HttpException. Error in it was ${e.code()} : ${e.message()}")
         } catch (e: UnknownHostException) {
             //cant connect to host
             Timber.e("Got UnknownHostException. Could not connect to host.")

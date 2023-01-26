@@ -38,7 +38,8 @@ class PokemonDetailsFragment : Fragment(R.layout.fragment_pokemon_details) {
                 binding.textHeight.text = getString(R.string.height, pokemon.height)
                 binding.textId.text = getString(R.string.id, pokemon.id)
                 binding.textIsDefault.text = getString(R.string.is_default, pokemon.isDefault)
-                binding.textLocationAreaEncounters.text = getString(R.string.location_area_encounters, pokemon.locationAreaEncounters)
+                binding.textLocationAreaEncounters.text =
+                    getString(R.string.location_area_encounters, pokemon.locationAreaEncounters)
                 binding.textOrder.text = getString(R.string.order, pokemon.order)
                 binding.textWeight.text = getString(R.string.weight, pokemon.weight)
             }

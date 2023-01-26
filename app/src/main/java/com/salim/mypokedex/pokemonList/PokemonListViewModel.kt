@@ -4,7 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.salim.mypokedex.pokemon.PokemonNameAndId
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -13,8 +16,8 @@ class PokemonListViewModel @Inject constructor(
     private val pokemonListUseCase: GetPokemonListUseCase
 ) : ViewModel() {
 
-    private var lowerPokemonLimit = 1
-    private var upperPokemonLimit = 151
+    private var lowerPokemonLimit = ABSOLUTE_LOWER_LIMIT
+    private var upperPokemonLimit = ORIGINAL_GEN_ONE_RANGE_ENDING
 
     private val _pokemonList = MutableStateFlow(
         convertStringListToPokemonNameAndIdList(pokemonListUseCase.getPokemonListFlow().value)
@@ -90,6 +93,7 @@ class PokemonListViewModel @Inject constructor(
     }
 
     companion object {
+        private const val ORIGINAL_GEN_ONE_RANGE_ENDING = 151
         const val ABSOLUTE_LOWER_LIMIT = 1
         const val ABSOLUTE_UPPER_LIMIT = 1279
         const val BELOW_RANGE = 0
