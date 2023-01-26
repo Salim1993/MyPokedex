@@ -135,6 +135,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private fun showCameraV2() {
         //val uri = Uri.fromFile(createImageFile())
+        EspressoCounterIdlingResource.increment()
         val uri = FileProvider.getUriForFile(
             requireContext(),
             requireContext().applicationContext.packageName + ".provider",
