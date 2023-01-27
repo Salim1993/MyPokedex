@@ -9,7 +9,6 @@
         android:id="@+id/range_description_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
         android:labelFor="@id/lower_limit_edit_text"
         android:text="@string/range_description" />
 
@@ -27,15 +26,14 @@
             android:maxWidth="20dp"
             android:ems="10"
             android:inputType="number"
-            android:contentDescription="@string/lower_limit_content_description"
             android:autofillHints="1" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:textColor="@color/black"
             android:layout_marginHorizontal="8dp"
+            android:labelFor="@id/upper_limit_edit_text"
             android:text="@string/to" />
 
         <EditText
@@ -44,7 +42,6 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="number"
-            android:contentDescription="@string/upper_limit_content_description"
             android:autofillHints="1279"/>
     </LinearLayout>
 </LinearLayout>
